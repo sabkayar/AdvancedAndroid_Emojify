@@ -1,18 +1,18 @@
 /*
-* Copyright (C) 2017 The Android Open Source Project
-*
-* Licensed under the Apache License, Version 2.0 (the "License");
-* you may not use this file except in compliance with the License.
-* You may obtain a copy of the License at
-*
-*  	http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing, software
-* distributed under the License is distributed on an "AS IS" BASIS,
-* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-* See the License for the specific language governing permissions and
-* limitations under the License.
-*/
+ * Copyright (C) 2017 The Android Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *  	http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 package com.example.android.emojify;
 
@@ -54,15 +54,36 @@ class Emojifier {
         Log.d(LOG_TAG, "detectFaces: number of faces = " + faces.size());
 
         // If there are no faces detected, show a Toast message
-        if(faces.size() == 0){
+        if (faces.size() == 0) {
             Toast.makeText(context, R.string.no_faces_message, Toast.LENGTH_SHORT).show();
         }
 
-        // TODO (2): Iterate through the faces, calling getClassifications() for each face.
+        // DONE (2): Iterate through the faces, calling getClassifications() for each face.
 
         // Release the detector
         detector.release();
+
+        getClassifications(context, faces);
     }
 
-    // TODO (1): Create a static method called getClassifications() which logs the probability of each eye being open and that the person is smiling.
+    private static void getClassifications(Context context, SparseArray<Face> faces) {
+        for (int i = 0; i < faces.size(); i++) {
+            Face face = faces.valueAt(i);
+            Log.d(LOG_TAG,
+                    "Left Eye Open: " + face.getIsLeftEyeOpenProbability()
+                            + "Right Eye Open: " + face.getIsRightEyeOpenProbability()
+                            + "Smiling prob: " + face.getIsSmilingProbability());
+            Toast.makeText(context, "Left Eye Open: " + face.getIsLeftEyeOpenProbability()
+                            + "Right Eye Open: " + face.getIsRightEyeOpenProbability()
+                            + "Smiling prob: " + face.getIsSmilingProbability(),
+                    Toast.LENGTH_SHORT).show();
+
+        }
+    }
+
+    // DONE (1): Create a static method called getClassifications() which logs the probability of each eye being open and that the person is smiling.
+
+
 }
+
+
